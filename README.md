@@ -2,7 +2,7 @@
 
 # [SecureEnv]
 
-secure you're environment
+[Project's description]
 
 ## How does it work?
 
@@ -31,7 +31,8 @@ If you're interested in how the project is organized at a higher level, please c
 ## Our PoC team :heart:
 
 Developers
-| [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/tonida-rodda) | [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/florianepitech)
+| [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/tonida-rodda) 
+| [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/florianepitech) 
 | :---: | :---: | :---: |
 
 Manager
