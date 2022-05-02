@@ -18,7 +18,7 @@ var httpClient = &http.Client{
 func getEnvFile() []string {
 	ftm, err := os.ReadFile("./.env")
 	if err != nil {
-		os.Exit(84)
+		log.Fatalln(err)
 	}
 	ret := string(ftm)
 	return strings.Split(ret, "\n")
@@ -30,7 +30,7 @@ func setEnvFile() {
 		val := strings.Split(tmp[i], "=")
 		err := os.Setenv(val[0], val[1])
 		if err != nil {
-			log.Fatal("non")
+			log.Fatal(err)
 		}
 	}
 }
@@ -54,9 +54,9 @@ func cutToEqual(str string) []string {
 }
 
 func createFile() *os.File {
-	f, err := os.Create("./.envrc")
+	f, err := os.OpenFile("./.envrc", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
 	if err != nil {
-		os.Exit(84)
+		log.Fatalln(err)
 	}
 	return f
 }
@@ -83,23 +83,30 @@ func writeData(f *os.File, arg []string, m []string) {
 	}
 }
 
+func concurency(n time.Duration, client *api.Client, arg []string) {
+	for _ = range time.Tick(n * time.Second) {
+		f := createFile()
+		data, err := client.Logical().Read(os.Getenv("PATHREAD"))
+		if err != nil {
+			panic(err)
+		}
+		m := formatData(data)
+		writeData(f, arg, m)
+		println("Data saved in .envrc")
+	}
+}
+
 func main() {
 	arg := os.Args
 	setEnvFile()
-	f := createFile()
 	token := os.Getenv("TOKEN")
 	vaultAddr := os.Getenv("ADRESS")
 
 	client, err := api.NewClient(&api.Config{Address: vaultAddr, HttpClient: httpClient})
 	if err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
 	client.SetToken(token)
-
-	data, err := client.Logical().Read(os.Getenv("PATHREAD"))
-	if err != nil {
-		panic(err)
-	}
-	m := formatData(data)
-	writeData(f, arg, m)
+	go concurency(10, client, arg)
+	select {}
 }
