@@ -6,21 +6,59 @@ Provide a secure environment for all developers.
 
 ## How does it work?
 
-[Explain how this project is working]
+Secret are store in a vault and our go program get these secret for update your environement variables
 
 ## Getting Started
 
+
 ### Installation
 
-[Explain how to install all of the project's dependencies]
+For install golang-tar [https://go.dev/doc/install]
+
+```
+sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.18.1.linux-amd64.tar.gz
+
+export PATH=$PATH:/usr/local/go/bin
+
+go version
+
+go get github.com/hashicorp/vault/api
+
+mkdir -p $GOPATH/src/github.com/hashicorp && cd $_
+
+git clone https://github.com/hashicorp/vault.git
+
+cd vault
+
+make bootstrap
+
+make dev
+
+vault -h
+```
 
 ### Quickstart
 
-[Explain how to run this project]
 
-### Usage
+```
+vault server -dev
+```
+get the hash from the vault and insert it in .env
+```
+ADRESS=http://127.0.0.1:8200
 
-[Explain how to use this project]
+HASH=hvs.PA3O9TDvERLIp7U9fNqM9uG8
+
+PATHREAD=${PATH}
+```
+sure you have to install docker and run the Dockerfile like this
+
+```
+sudo docker build . -t ${NAME}
+
+sudo docker run -d --network="host"  --name secureEnv ${NAME}
+```
+
 
 ## Get involved
 

@@ -1,6 +1,7 @@
 package main
 
 import (
+	envi "Vault/Env"
 	"fmt"
 	"log"
 	"net/http"
@@ -13,26 +14,6 @@ import (
 
 var httpClient = &http.Client{
 	Timeout: 10 * time.Second,
-}
-
-func getEnvFile() []string {
-	ftm, err := os.ReadFile("./.env")
-	if err != nil {
-		log.Fatalln(err)
-	}
-	ret := string(ftm)
-	return strings.Split(ret, "\n")
-}
-
-func setEnvFile() {
-	tmp := getEnvFile()
-	for i := 0; i != len(tmp); i++ {
-		val := strings.Split(tmp[i], "=")
-		err := os.Setenv(val[0], val[1])
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
 }
 
 func parseReader(str string) string {
@@ -98,8 +79,8 @@ func concurency(n time.Duration, client *api.Client, arg []string) {
 
 func main() {
 
-	arg := os.Args
-	setEnvFile()
+	args := os.Args
+	envi.SetEnvFile()
 	token := os.Getenv("TOKEN")
 	vaultAddr := os.Getenv("ADRESS")
 
@@ -108,6 +89,6 @@ func main() {
 		log.Fatalln(err)
 	}
 	client.SetToken(token)
-	go concurency(10, client, arg)
+	go concurency(10, client, args)
 	select {}
 }
