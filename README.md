@@ -68,7 +68,7 @@ If you're interested in how the project is organized at a higher level, please c
 
 Developers
 | [<img src="https://github.com/tonida-rodda.png?size=85" width=85><br><sub>[Toni Da-rodda]</sub>](https://github.com/tonida-rodda) | [<img src="https://github.com/florianepitech.png?size=85" width=85><br><sub>[Florian Damiot]</sub>](https://github.com/florianepitech) | <br></br>
-| :---: | :---: | :---: |
+| :---: | :---: |
 
 Manager
 | [<img src="https://github.com/adrienfort.png?size=85" width=85><br><sub>[Adrien Fort]</sub>](https://github.com/adrienfort)
