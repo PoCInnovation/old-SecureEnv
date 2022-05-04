@@ -1,11 +1,13 @@
-FROM golang:1.18-alpine
+FROM golang:1.18-alpine as build
 
 WORKDIR /app
 
-EXPOSE 8200
-
-COPY ./srcs ./
+COPY . .
 
 RUN go mod download
 
-ENTRYPOINT [ "go", "run", "main.go" ]
+RUN go get -u ./
+
+RUN go build main.go
+
+ENTRYPOINT [ "./main" ]
