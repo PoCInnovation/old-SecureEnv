@@ -29,7 +29,6 @@ You're invited to join this project ! Check out the [contributing guide](./CONTR
 If you're interested in how the project is organized at a higher level, please contact the current project manager.
 
 ## Our PoC team :heart:
-## Our PoC team :heart:
 
 Developers
 | [<img src="https://github.com/florianepitech.png?size=85" width=85><br><sub>Florian D.</sub>](https://github.com/florianepitech) | [<img src="https://github.com/tonida-rodda.png?size=85" width=85><br><sub>Toni D.R.</sub>](https://github.com/tonida-rodda)
