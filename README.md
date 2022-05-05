@@ -29,13 +29,14 @@ You're invited to join this project ! Check out the [contributing guide](./CONTR
 If you're interested in how the project is organized at a higher level, please contact the current project manager.
 
 ## Our PoC team :heart:
+## Our PoC team :heart:
 
 Developers
-| [<img src="https://github.com/florianepitech.png?size=85" width=85><br><sub>Florian D.</sub>](https://github.com/florianepitech) | [<img src="https://github.com/tonida-rodda.png?size=85" width=85><br><sub>Tony Da R.</sub>](https://github.com/tonida-rodda)
+| [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy) | [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy) | [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy)
 | :---: | :---: | :---: |
 
 Manager
-| [<img src="https://github.com/adrienfort.png?size=85" width=85><br><sub>Adrien F.</sub>](https://github.com/adrienfort)
+| [<img src="https://github.com/adrienfort.png?size=85" width=85><br><sub>[Manager's name]</sub>](https://github.com/adrienfort)
 | :---: |
 
 <h2 align=center>
