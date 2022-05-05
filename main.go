@@ -6,32 +6,17 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strings"
 	"time"
+
+	"github.com/pkg/errors"
 
 	"github.com/hashicorp/vault/api"
 )
 
+var ErrKeyNotFound = errors.New("Key not found")
+
 var httpClient = &http.Client{
-	Timeout: 10 * time.Second,
-}
-
-func parseReader(str string) string {
-	res := strings.Replace(str, "map[", "", 1)
-	res = strings.Replace(res, "]", "", 1)
-	res = strings.Replace(res, ":", "=", 100)
-	return res
-}
-
-func strToWordArray(str string) []string {
-	p := parseReader(str)
-	array := strings.Split(p, " ")
-	return array
-}
-
-func cutToEqual(str string) []string {
-	p := strings.Split(str, "=")
-	return p
+	Timeout: 5 * time.Second,
 }
 
 func createFile() *os.File {
@@ -42,44 +27,44 @@ func createFile() *os.File {
 	return f
 }
 
-func formatData(sev *api.Secret) []string {
-	s := sev.Data["data"]
-	se := fmt.Sprintf("%v", s)
-	m := strToWordArray(se)
-	return m
-}
+func retrieveData(sev *api.Secret) (map[string]interface{}, error) {
+	s, ok := sev.Data["data"]
+	if !ok {
+		return nil, errors.New("could not find data field")
+	}
 
-func writeData(f *os.File, arg []string, m []string) {
-	if len(arg) == 2 {
-		for i := 0; i != len(m); i++ {
-			p := cutToEqual(m[i])
-			if p[0] == arg[1] {
-				f.WriteString(m[i] + "\n")
-			}
-		}
-	} else {
-		for i := 0; i != len(m); i++ {
-			f.WriteString(m[i] + "\n")
-		}
+	switch t := s.(type) {
+	case map[string]interface{}:
+		return t, nil
+	default:
+		return nil, errors.New("Errors occurs on types: not map[string]interface")
 	}
 }
 
-func concurency(n time.Duration, client *api.Client, arg []string) {
+func writeData(f *os.File, m map[string]interface{}) {
+	for k, v := range m {
+		f.WriteString(fmt.Sprintf("%s=%s\n", k, v))
+	}
+}
+
+func concurency(n time.Duration, client *api.Client) error {
 	for range time.Tick(n * time.Second) {
 		f := createFile()
 		data, err := client.Logical().Read(os.Getenv("PATHREAD"))
 		if err != nil {
-			panic(err)
+			return ErrKeyNotFound
 		}
-		m := formatData(data)
-		writeData(f, arg, m)
+		m, err := retrieveData(data)
+		if err != nil {
+			return errors.Wrap(err, "In retrieveData")
+		}
+		writeData(f, m)
 		println("Data saved in .envrc")
 	}
+	return nil
 }
 
 func main() {
-
-	args := os.Args
 	envi.SetEnvFile()
 	token := os.Getenv("TOKEN")
 	vaultAddr := os.Getenv("ADRESS")
@@ -89,6 +74,7 @@ func main() {
 		log.Fatalln(err)
 	}
 	client.SetToken(token)
-	go concurency(10, client, args)
-	select {}
+	if err = concurency(5, client); err != nil {
+		log.Fatalf("%+v\n", err)
+	}
 }

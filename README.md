@@ -1,60 +1,68 @@
 # SecureEnv
 
-Provide a secure environment for all developers.
+Provide a secure environement for developers working whit Credentials you don't have to care about this tools update environment for you
 
-## How does it work?
+# How does it work?
 
-Secret are store in a vault and our go program get these secret for update your environement variables
+Shema
 
-## Getting Started
+# Getting Started
 
-
-### Installation
-
-For install golang-tar [https://go.dev/doc/install]
-
+Make sure you have to install docker and run the Dockerfile like this run the project like this
 ```
-sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.18.1.linux-amd64.tar.gz
+docker build . -t ${NAME}
 
-export PATH=$PATH:/usr/local/go/bin
+docker run -d --network="host"  --name secureEnv ${NAME}
+```
 
-go version
+# Installation
 
+#### Make sure you installed [Goland](https://go.dev/doc/install) <br />
+
+#### Install Goland dependencies
+```shell
 go get github.com/hashicorp/vault/api
-
+```
+#### Create directory for vault
+```shell
 mkdir -p $GOPATH/src/github.com/hashicorp && cd $_
+```
 
+#### Git clone vault-hashicorp repository
+```shell
 git clone https://github.com/hashicorp/vault.git
-
+```
+#### Change directory in vault
+```shell
 cd vault
-
+```
+#### Make dependencies
+```shell
 make bootstrap
+```
 
+#### Build project
+```shell
 make dev
-
+```
+#### Check vault version
+```shell
 vault -h
 ```
 
-### Quickstart
+# Quickstart
 
-
-```
+#### Launch vault local server
+```shell
 vault server -dev
 ```
-get the hash from the vault and insert it in .env
+Get the Hash from the terminal where you launched the vault server you have to realize a .env like this
 ```
 ADRESS=http://127.0.0.1:8200
 
 HASH=hvs.PA3O9TDvERLIp7U9fNqM9uG8
 
 PATHREAD=${PATH}
-```
-sure you have to install docker and run the Dockerfile like this
-
-```
-sudo docker build . -t ${NAME}
-
-sudo docker run -d --network="host"  --name secureEnv ${NAME}
 ```
 
 
@@ -67,11 +75,11 @@ If you're interested in how the project is organized at a higher level, please c
 ## Our PoC team :heart:
 
 Developers
-| [<img src="https://github.com/tonida-rodda.png?size=85" width=85><br><sub>[Toni Da-rodda]</sub>](https://github.com/tonida-rodda) | [<img src="https://github.com/florianepitech.png?size=85" width=85><br><sub>[Florian Damiot]</sub>](https://github.com/florianepitech) |
+| [<img src="https://github.com/tonida-rodda.png?size=85" width=85><br><sub>Toni Da-rodda</sub>](https://github.com/tonida-rodda) | [<img src="https://github.com/florianepitech.png?size=85" width=85><br><sub>Florian Damiot</sub>](https://github.com/florianepitech) |
 | :---: | :---: |
 
 Manager
-| [<img src="https://github.com/adrienfort.png?size=85" width=85><br><sub>[Adrien Fort]</sub>](https://github.com/adrienfort)
+| [<img src="https://github.com/adrienfort.png?size=85" width=85><br><sub>Adrien Fort</sub>](https://github.com/adrienfort)
 | :---: |
 
 <h2 align=center>
