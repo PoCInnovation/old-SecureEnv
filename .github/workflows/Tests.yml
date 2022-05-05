@@ -1,4 +1,4 @@
-name: Go
+name: Run build && Tests
 
 on:
   push:
