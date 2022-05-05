@@ -4,7 +4,7 @@ Provide a secure environement for developers working whit Credentials you don't 
 
 # How does it work?
 
-[image](./.github/1Vault-1611045210156.webp)
+![image](./.github/1Vault-1611045210156.webp)
 
 # Getting Started
 
