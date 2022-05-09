@@ -13,11 +13,13 @@ import (
 	"github.com/hashicorp/vault/api"
 )
 
+var ErrKeyNotFound = errors.New("Key not found")
+
 var httpClient = &http.Client{
 	Timeout: 5 * time.Second,
 }
 
-type connection interface {
+type Connection interface {
 	NewClient() (*Getter, error)
 }
 
@@ -36,7 +38,10 @@ func (g *Getter) NewClient() (*Getter, error) {
 	return g, err
 }
 
-var ErrKeyNotFound = errors.New("Key not found")
+func callApi(c Connection) (*Getter, error) {
+	val, err := c.NewClient()
+	return val, err
+}
 
 func createFile() *os.File {
 	f, err := os.OpenFile("./.envrc", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
@@ -86,13 +91,12 @@ func concurency(n time.Duration, client *api.Client) error {
 func main() {
 	envi.SetEnvFile()
 	token := os.Getenv("TOKEN")
-	g := Getter{}
-	client, err := g.NewClient()
+	g := &Getter{}
+	client, err := callApi(g)
 
 	if err != nil {
 		log.Fatalln(err)
 	}
-
 	client.Cli.SetToken(token)
 	if err = concurency(5, client.Cli); err != nil {
 		log.Fatalf("%+v\n", err)
