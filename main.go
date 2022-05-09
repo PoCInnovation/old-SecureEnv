@@ -13,11 +13,30 @@ import (
 	"github.com/hashicorp/vault/api"
 )
 
-var ErrKeyNotFound = errors.New("Key not found")
-
 var httpClient = &http.Client{
 	Timeout: 5 * time.Second,
 }
+
+type connection interface {
+	NewClient() (*Getter, error)
+}
+
+type Getter struct {
+	Cli *api.Client
+}
+
+func (g *Getter) NewClient() (*Getter, error) {
+	vaultAddr := os.Getenv("ADRESS")
+	var err error
+
+	g.Cli, err = api.NewClient(&api.Config{Address: vaultAddr, HttpClient: httpClient})
+	if err != nil {
+		log.Fatalln("errors New client")
+	}
+	return g, err
+}
+
+var ErrKeyNotFound = errors.New("Key not found")
 
 func createFile() *os.File {
 	f, err := os.OpenFile("./.envrc", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
@@ -67,14 +86,15 @@ func concurency(n time.Duration, client *api.Client) error {
 func main() {
 	envi.SetEnvFile()
 	token := os.Getenv("TOKEN")
-	vaultAddr := os.Getenv("ADRESS")
+	g := Getter{}
+	client, err := g.NewClient()
 
-	client, err := api.NewClient(&api.Config{Address: vaultAddr, HttpClient: httpClient})
 	if err != nil {
 		log.Fatalln(err)
 	}
-	client.SetToken(token)
-	if err = concurency(5, client); err != nil {
+
+	client.Cli.SetToken(token)
+	if err = concurency(5, client.Cli); err != nil {
 		log.Fatalf("%+v\n", err)
 	}
 }
