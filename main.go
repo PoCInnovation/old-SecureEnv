@@ -89,7 +89,7 @@ func concurency(n time.Duration, client *api.Client) error {
 }
 
 func main() {
-	envi.SetEnvFile()
+	envi.SetEnvFile("./.env")
 	token := os.Getenv("TOKEN")
 	g := &Getter{}
 	client, err := callApi(g)
