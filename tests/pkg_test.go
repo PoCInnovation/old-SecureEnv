@@ -1,13 +1,30 @@
 package main
 
 import (
+	envi "Vault/Env"
+	"os"
 	"testing"
 )
 
-// realise tests on function
-func TestSum(t *testing.T) {
-	total := 10
-	if total != 10 {
-		t.Errorf("Sum was incorrect, got: %d, want: %d.", total, 10)
+func TestEnv(t *testing.T) {
+	envi.SetEnvFile("../.env")
+	e := os.Getenv("ADRESS")
+	if e != "http://127.0.0.1:8200" {
+		t.Errorf("Incorect read of env")
+	}
+}
+
+func TestEnv2(t *testing.T) {
+	envi.SetEnvFile("../.env")
+	e := os.Getenv("PATHREAD")
+	if e != "secret/data/abd" {
+		t.Errorf("Incorect read of env")
+	}
+}
+func TestEnv3(t *testing.T) {
+	envi.SetEnvFile("../.env")
+	e := os.Getenv("TOKEN")
+	if e != "hvs.DPCpBiRQdMUMMoZdrzDvIceQ" {
+		t.Errorf("Incorect read of env")
 	}
 }
