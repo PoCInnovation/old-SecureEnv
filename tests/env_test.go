@@ -1,7 +1,7 @@
 package main
 
 import (
-	envi "Vault/Env"
+	envi "Vault/env"
 	"os"
 	"testing"
 )
