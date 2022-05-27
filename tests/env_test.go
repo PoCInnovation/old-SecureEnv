@@ -33,9 +33,9 @@ func TestGetEnvFile(t *testing.T) {
 	env := envi.GetEnvFile("../.env")
 
 	if env[0] != "ADRESS=http://127.0.0.1:8200" {
-		t.Errorf("Wron value")
+		t.Errorf("Unable to read [ADRESS] env variable")
 	}
 	if env[1] != "TOKEN=hvs.C5rcwKI673pSTlwell5bRHCG" {
-		t.Errorf("Wron value")
+		t.Errorf("Unable to read [TOKEN] env variable")
 	}
 }
