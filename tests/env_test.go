@@ -2,6 +2,7 @@ package main
 
 import (
 	envi "Vault/env"
+	"fmt"
 	"os"
 	"testing"
 )
@@ -9,7 +10,7 @@ import (
 func TestSetEnvFile(t *testing.T) {
 	envi.SetEnvFile("../.env")
 	e := os.Getenv("ADRESS")
-	if e != "http://127.0.0.1:8200" {
+	if e != "http://secureenv.poc-innovation.com" {
 		t.Errorf("Unable to read [ADRESS] env variable")
 	}
 }
@@ -31,8 +32,8 @@ func TestSetEnvFile3(t *testing.T) {
 
 func TestGetEnvFile(t *testing.T) {
 	env := envi.GetEnvFile("../.env")
-
-	if env[0] != "ADRESS=http://127.0.0.1:8200" {
+	fmt.Println(env[0])
+	if env[0] != "ADRESS=http://secureenv.poc-innovation.com" {
 		t.Errorf("Unable to read [ADRESS] env variable")
 	}
 	if env[1] != "TOKEN=hvs.C5rcwKI673pSTlwell5bRHCG" {
