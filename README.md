@@ -1,26 +1,70 @@
-> If you see this section, you've just created a repository using [PoC Innovation's Open-Source project template](https://github.com/PoCInnovation/open-source-project-template). Check the [getting started guide](./.github/getting-started.md).
+# SecureEnv
 
-# [PROJECT'S NAME]
+Provide a secure environement for developers working whit Credentials you don't have to care about this tools update environment for you
 
-[Project's description]
+# How does it work?
 
-## How does it work?
+![image](./.github/assets/1Vault-1611045210156.webp)
 
-[Explain how this project is working]
+# Getting Started
 
-## Getting Started
+Make sure you have to install docker and run the Dockerfile like this run the project like this
+```
+docker build . -t ${NAME}
 
-### Installation
+docker run -d --network="host"  --name secureEnv ${NAME}
+```
 
-[Explain how to install all of the project's dependencies]
+# Installation
 
-### Quickstart
+#### Make sure you installed [Goland](https://go.dev/doc/install) <br />
 
-[Explain how to run this project]
+#### Install Goland dependencies
+```shell
+go get github.com/hashicorp/vault/api
+```
+#### Create directory for vault
+```shell
+mkdir -p $GOPATH/src/github.com/hashicorp && cd $_
+```
 
-### Usage
+#### Git clone vault-hashicorp repository
+```shell
+git clone https://github.com/hashicorp/vault.git
+```
+#### Change directory in vault
+```shell
+cd vault
+```
+#### Make dependencies
+```shell
+make bootstrap
+```
 
-[Explain how to use this project]
+#### Build project
+```shell
+make dev
+```
+#### Check vault version
+```shell
+vault -h
+```
+
+# Quickstart
+
+#### Launch vault local server
+```shell
+vault server -dev
+```
+Get the Hash from the terminal where you launched the vault server you have to realize a .env like this
+```
+ADRESS=http://127.0.0.1:8200
+
+HASH=hvs.PA3O9TDvERLIp7U9fNqM9uG8
+
+PATHREAD=${PATH}
+```
+
 
 ## Get involved
 
@@ -31,11 +75,11 @@ If you're interested in how the project is organized at a higher level, please c
 ## Our PoC team :heart:
 
 Developers
-| [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy) | [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy) | [<img src="https://github.com/MrZalTy.png?size=85" width=85><br><sub>[Developer's name]</sub>](https://github.com/MrZalTy)
-| :---: | :---: | :---: |
+| [<img src="https://github.com/tonida-rodda.png?size=85" width=85><br><sub>Toni Da-rodda</sub>](https://github.com/tonida-rodda) | [<img src="https://github.com/florianepitech.png?size=85" width=85><br><sub>Florian Damiot</sub>](https://github.com/florianepitech) |
+| :---: | :---: |
 
 Manager
-| [<img src="https://github.com/adrienfort.png?size=85" width=85><br><sub>[Manager's name]</sub>](https://github.com/adrienfort)
+| [<img src="https://github.com/adrienfort.png?size=85" width=85><br><sub>Adrien Fort</sub>](https://github.com/adrienfort)
 | :---: |
 
 <h2 align=center>
